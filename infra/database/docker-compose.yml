@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  hexagon-mysql:
+    container_name: hexagon-mysql
+    image: mysql:8.1
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: logistic
+      MYSQL_ROOT_PASSWORD: Waraion91
+    restart: always

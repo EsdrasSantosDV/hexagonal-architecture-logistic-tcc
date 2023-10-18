@@ -16,6 +16,12 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 
 import java.util.Set;
 
@@ -42,7 +48,23 @@ public class CreateProductController {
     @Transactional
     @POST
     @Path("/")
-    public Response createProduct(ProductDto request) {
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(
+            summary = "Cria um novo produto",
+            description = "Cria um novo produto com base nos valores fornecidos."
+    )
+    @APIResponses(value = {
+            @APIResponse(
+                    responseCode = "201",
+                    description = "Produto criado com sucesso",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductWebModel.class))
+            )
+    })
+    public Response createProduct(@RequestBody(
+            description = "Dados do produto a ser criado",
+            required = true,
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductDto.class))
+    ) ProductDto request) {
         Set<ConstraintViolation<ProductDto>> violations = validator.validate(request);
         if (!violations.isEmpty()) {
             return Response.status(Response.Status.BAD_REQUEST)

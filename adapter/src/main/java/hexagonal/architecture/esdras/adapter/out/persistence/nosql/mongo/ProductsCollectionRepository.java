@@ -1,0 +1,38 @@
+package hexagonal.architecture.esdras.adapter.out.persistence.nosql.mongo;
+
+import hexagonal.architecture.esdras.application.port.output.products.persistence.OutputPortProductRepository;
+import hexagonal.architecture.esdras.domain.entity.ProductDomain;
+import io.quarkus.arc.lookup.LookupIfProperty;
+import jakarta.enterprise.context.ApplicationScoped;
+
+import java.util.Optional;
+
+@LookupIfProperty(name = "persistence", stringValue = "nosql")
+@ApplicationScoped
+public class ProductsCollectionRepository implements OutputPortProductRepository {
+    private final ProductsCollectionPanancheRepository mongoRepository;
+
+    public ProductsCollectionRepository(ProductsCollectionPanancheRepository mongoRepository) {
+        this.mongoRepository = mongoRepository;
+    }
+
+
+    @Override
+    public ProductDomain save(ProductDomain productDomain) {
+        ProductsMongoCollection mongoCollection = ProductsCollectionMapper.domainToMongo(productDomain);
+
+        System.out.println(productDomain);
+
+        System.out.println(mongoCollection.getId());
+
+        mongoCollection.persist();
+
+        return ProductsCollectionMapper.mongoToDomain(mongoCollection);
+    }
+
+    @Override
+    public Optional<ProductDomain> findById(String id) {
+        ProductsMongoCollection product = mongoRepository.findById(id).orElse(null);
+        return ProductsCollectionMapper.productDomainOptional(product);
+    }
+}

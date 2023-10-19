@@ -10,12 +10,12 @@ import java.util.Optional;
 
 @LookupIfProperty(name = "persistence", stringValue = "mysql")
 @ApplicationScoped
-public class JpaProductEntityRepository implements OutputPortProductRepository {
+public class JpaProductEntityAdapterRepository implements OutputPortProductRepository {
 
     private final JpaProductEntityPanacheRepository panacheRepository;
 
 
-    public JpaProductEntityRepository(JpaProductEntityPanacheRepository panacheRepository) {
+    public JpaProductEntityAdapterRepository(JpaProductEntityPanacheRepository panacheRepository) {
         this.panacheRepository = panacheRepository;
     }
 

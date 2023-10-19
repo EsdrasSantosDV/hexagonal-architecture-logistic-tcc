@@ -9,10 +9,10 @@ import java.util.Optional;
 
 @LookupIfProperty(name = "persistence", stringValue = "nosql")
 @ApplicationScoped
-public class ProductsCollectionRepository implements OutputPortProductRepository {
+public class ProductsCollectionAdapterRepository implements OutputPortProductRepository {
     private final ProductsCollectionPanancheRepository mongoRepository;
 
-    public ProductsCollectionRepository(ProductsCollectionPanancheRepository mongoRepository) {
+    public ProductsCollectionAdapterRepository(ProductsCollectionPanancheRepository mongoRepository) {
         this.mongoRepository = mongoRepository;
     }
 

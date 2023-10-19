@@ -1,18 +1,21 @@
 package hexagonal.architecture.esdras.adapter.out.persistence.nosql.mongo;
 
-import io.quarkus.mongodb.panache.PanacheMongoEntity;
+import io.quarkus.mongodb.panache.PanacheMongoEntityBase;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import lombok.Getter;
 import lombok.Setter;
-import org.bson.types.ObjectId;
+import lombok.ToString;
+import org.bson.codecs.pojo.annotations.BsonId;
 
 import java.math.BigDecimal;
 
 @Getter
 @Setter
-@MongoEntity(collection = "product_collection")
-public class ProductsMongoCollection extends PanacheMongoEntity {
-    public ObjectId id;
+@ToString
+@MongoEntity(collection = "products")
+public class ProductsMongoCollection extends PanacheMongoEntityBase {
+    @BsonId
+    private String id;
     private String name;
     private String description;
     private String category;

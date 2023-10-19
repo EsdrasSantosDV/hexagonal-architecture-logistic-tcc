@@ -12,6 +12,7 @@ public class ProductsCollectionMapper {
 
     public static ProductsMongoCollection domainToMongo(ProductDomain domain) {
         ProductsMongoCollection entity = new ProductsMongoCollection();
+        entity.setId(domain.getId().value());
         entity.setName(domain.getName());
         entity.setDescription(domain.getDescription());
         entity.setCategory(domain.getCategory().name());
@@ -35,7 +36,7 @@ public class ProductsCollectionMapper {
 
     public static ProductDomain mongoToDomain(ProductsMongoCollection entity) {
         return ProductDomain.builder()
-                .id(new ProductIdDomain(entity.id.toHexString()))
+                .id(new ProductIdDomain(entity.getId()))
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .category(ProductCategoryDomain.valueOf(entity.getCategory()))

@@ -16,10 +16,9 @@ public class CreateProductService implements InputPortCreateProductUseCase {
 
     @Override
     public ProductDomain createProduct(ProductDomain productDomain) throws ProductAlreadyExistsException {
-//        if (outputPortProductRepository.findById(productDomain.getId().value()).isPresent()) {
-//            throw new ProductAlreadyExistsException();
-//        }
-        System.out.println("CreateProductService.createProduct");
+        if (outputPortProductRepository.findById(productDomain.getId().value()).isPresent()) {
+            throw new ProductAlreadyExistsException();
+        }
         return outputPortProductRepository.save(productDomain);
     }
 }

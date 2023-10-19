@@ -20,19 +20,14 @@ public class ProductsCollectionRepository implements OutputPortProductRepository
     @Override
     public ProductDomain save(ProductDomain productDomain) {
         ProductsMongoCollection mongoCollection = ProductsCollectionMapper.domainToMongo(productDomain);
-
-        System.out.println(productDomain);
-
-        System.out.println(mongoCollection.getId());
-
-        mongoCollection.persist();
-
+        mongoRepository.persist(mongoCollection);
         return ProductsCollectionMapper.mongoToDomain(mongoCollection);
     }
 
     @Override
     public Optional<ProductDomain> findById(String id) {
         ProductsMongoCollection product = mongoRepository.findById(id).orElse(null);
+
         return ProductsCollectionMapper.productDomainOptional(product);
     }
 }

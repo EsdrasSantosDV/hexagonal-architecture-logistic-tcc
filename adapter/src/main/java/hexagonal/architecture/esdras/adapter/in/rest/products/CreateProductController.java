@@ -8,7 +8,6 @@ import hexagonal.architecture.esdras.application.port.input.products.InputPortCr
 import hexagonal.architecture.esdras.application.port.input.products.exceptions.ProductAlreadyExistsException;
 import hexagonal.architecture.esdras.domain.entity.ProductDomain;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import jakarta.ws.rs.POST;
@@ -45,7 +44,7 @@ public class CreateProductController {
         this.createProductUseCase = createProductUseCase;
     }
 
-    @Transactional
+
     @POST
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)

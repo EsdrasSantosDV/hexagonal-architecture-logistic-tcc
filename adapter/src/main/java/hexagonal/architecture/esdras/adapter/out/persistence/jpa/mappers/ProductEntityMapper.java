@@ -1,10 +1,9 @@
 package hexagonal.architecture.esdras.adapter.out.persistence.jpa;
 
+import hexagonal.architecture.esdras.adapter.out.persistence.jpa.entities.ProductsEntityJpa;
 import hexagonal.architecture.esdras.domain.entity.ProductDomain;
-import hexagonal.architecture.esdras.domain.vo.MoneyDomain;
 import hexagonal.architecture.esdras.domain.vo.ProductIdDomain;
 
-import java.util.Currency;
 import java.util.Optional;
 
 public class ProductEntityMapper {
@@ -24,11 +23,6 @@ public class ProductEntityMapper {
         entity.setStorageInstructions(domain.getStorageInstructions());
         entity.setRestrictions(domain.getRestrictions());
 
-        if (domain.getPrice() != null) {
-            entity.setPriceCurrency(domain.getPrice().currency().getCurrencyCode());
-            entity.setPriceAmount(domain.getPrice().amount());
-        }
-
         return entity;
     }
 
@@ -42,7 +36,6 @@ public class ProductEntityMapper {
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .category(entity.getCategory())
-                .price(new MoneyDomain(Currency.getInstance(entity.getPriceCurrency()), entity.getPriceAmount()))
                 .height(entity.getHeight())
                 .width(entity.getWidth())
                 .depth(entity.getDepth())

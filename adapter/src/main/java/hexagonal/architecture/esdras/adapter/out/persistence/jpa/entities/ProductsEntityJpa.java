@@ -6,8 +6,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-
 @Entity
 @Table(name = "product")
 @Getter
@@ -22,12 +20,6 @@ public class ProductsEntityJpa {
 
     @Column(nullable = false)
     private String description;
-
-    @Column(nullable = false)
-    private String priceCurrency;
-
-    @Column(nullable = false)
-    private BigDecimal priceAmount;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

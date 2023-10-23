@@ -30,30 +30,43 @@ public class CreateInvoiceService implements InputPortCreateInvoiceEntryUseCase 
 
     @Override
     public InvoiceEntryDomain createInvoiceEntry(SendNfCommand command) throws ProductNotExistException {
-
         List<String> missingProducts = new ArrayList<>();
+        List<ProductCoreDomain> productCoreDomains = getProductCoreDomains(command, missingProducts);
 
-        List<ProductCoreDomain> productCoreDomains = command.productNfInvoiceEntries()
+        validateMissingProducts(missingProducts);
+
+        InvoiceEntryDomain nfEntry = buildInvoiceEntryDomain(command);
+        addProductsToInvoiceEntry(nfEntry, productCoreDomains);
+
+        return this.outputPortNfInvoiceEntryRepository.save(nfEntry);
+    }
+
+    private List<ProductCoreDomain> getProductCoreDomains(SendNfCommand command, List<String> missingProducts) {
+        return command.productNfInvoiceEntries()
                 .stream()
                 .map(entry -> buildProductCoreDomain(entry, command, missingProducts))
                 .filter(Objects::nonNull)
                 .toList();
+    }
 
+    private void validateMissingProducts(List<String> missingProducts) throws ProductNotExistException {
         if (!missingProducts.isEmpty()) {
             throw new ProductNotExistException("Produtos não encontrados: " + String.join(", ", missingProducts));
         }
+    }
 
-        InvoiceEntryDomain nfEntry =
-                outputPortNfInvoiceEntryRepository.findById(command.id())
-                        .orElseGet(() -> InvoiceEntryDomain.builder()
-                                .id(new NfEntryIdDomain(command.id()))
-                                .issueDate(command.issueDate())
-                                .issuer(command.issuer())
-                                .recipient(command.recipient())
-                                .totalValue(new MoneyDomain(Currency.getInstance(command.currency().getCurrencyCode()), command.amount()))
-                                .build());
+    private InvoiceEntryDomain buildInvoiceEntryDomain(SendNfCommand command) {
+        return outputPortNfInvoiceEntryRepository.findById(command.id())
+                .orElseGet(() -> InvoiceEntryDomain.builder()
+                        .id(new NfEntryIdDomain(command.id()))
+                        .issueDate(command.issueDate())
+                        .issuer(command.issuer())
+                        .recipient(command.recipient())
+                        .totalValue(new MoneyDomain(Currency.getInstance(command.currency().getCurrencyCode()), command.amount()))
+                        .build());
+    }
 
-
+    private void addProductsToInvoiceEntry(InvoiceEntryDomain nfEntry, List<ProductCoreDomain> productCoreDomains) {
         for (ProductCoreDomain productCoreDomain : productCoreDomains) {
             try {
                 nfEntry.addProduct(productCoreDomain, productCoreDomain.getQuantity());
@@ -61,9 +74,6 @@ public class CreateInvoiceService implements InputPortCreateInvoiceEntryUseCase 
                 throw new RuntimeException(e);
             }
         }
-
-
-        return this.outputPortNfInvoiceEntryRepository.save(nfEntry);
     }
 
     private ProductCoreDomain buildProductCoreDomain(ProductNfInvoiceEntry entry, SendNfCommand command, List<String> missingProducts) {
@@ -82,9 +92,7 @@ public class CreateInvoiceService implements InputPortCreateInvoiceEntryUseCase 
         productCoreDomain.dateNow();
         productCoreDomain.generateSkuFromProduct();
         productCoreDomain.setQuantity(entry.quantity());
-
-        System.out.println(productCoreDomain);
-
+        
 
         return productCoreDomain;
     }

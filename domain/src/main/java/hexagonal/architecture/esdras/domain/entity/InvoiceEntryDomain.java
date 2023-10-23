@@ -11,10 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Data
 @Builder
@@ -42,8 +39,11 @@ public class InvoiceEntryDomain {
                 throw new InvoiceValueExceededException("A adição deste produto excede o valor total definido na nota fiscal.");
             }
         }
-        ProductCoreDomain currentProduct = products.computeIfAbsent(product.getSku(), ignored -> product);
-        currentProduct.increaseQuantityBy(quantity);
+        Optional.ofNullable(products.get(product.getSku()))
+                .ifPresentOrElse(
+                        existingProduct -> existingProduct.increaseQuantityBy(quantity),
+                        () -> products.put(product.getSku(), product)
+                );
     }
 
     public void putProductIgnoringNotEnoughItemsInStock(ProductCoreDomain product, int quantity) {

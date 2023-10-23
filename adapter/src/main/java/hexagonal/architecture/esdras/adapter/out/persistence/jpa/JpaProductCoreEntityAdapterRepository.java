@@ -34,7 +34,7 @@ public class JpaProductCoreEntityAdapterRepository implements OutputPortProductC
     }
 
     @Override
-    public Optional<ProductCoreDomain> findBySku(String id) {
+    public Optional<ProductCoreDomain> findBySku(Integer id) {
         ProductCoreEntityJpa product = panacheRepository.findById(id);
         return ProductCoreMapper.toDomainEntityOptional(product);
     }

@@ -1,8 +1,12 @@
 package hexagonal.architecture.esdras.bootstrap;
 
 
+import hexagonal.architecture.esdras.application.port.input.invoiceentry.InputPortCreateInvoiceEntryUseCase;
 import hexagonal.architecture.esdras.application.port.input.products.InputPortCreateProductUseCase;
-import hexagonal.architecture.esdras.application.port.output.products.persistence.OutputPortProductRepository;
+import hexagonal.architecture.esdras.application.port.output.nfinvoiceentry.persistence.OutputPortNfInvoiceEntry;
+import hexagonal.architecture.esdras.application.port.output.productcore.persistence.OutputPortProductCore;
+import hexagonal.architecture.esdras.application.port.output.products.persistence.OutputPortProduct;
+import hexagonal.architecture.esdras.application.service.products.CreateInvoiceService;
 import hexagonal.architecture.esdras.application.service.products.CreateProductService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
@@ -13,12 +17,24 @@ import jakarta.inject.Inject;
 class QuarkusAppConfig {
 
     @Inject
-    Instance<OutputPortProductRepository> outputPortProductRepository;
+    Instance<OutputPortProduct> outputPortProductRepository;
+
+    @Inject
+    Instance<OutputPortProductCore> outputPortProductCoreRepository;
+
+    @Inject
+    Instance<OutputPortNfInvoiceEntry> outputPortNfInvoiceEntryRepository;
 
     @Produces
     @ApplicationScoped
     InputPortCreateProductUseCase inputPortCreateProductUseCase() {
         return new CreateProductService(outputPortProductRepository.get());
+    }
+
+    @Produces
+    @ApplicationScoped
+    InputPortCreateInvoiceEntryUseCase inputPortCreateInvoiceEntryUseCase() {
+        return new CreateInvoiceService(outputPortProductRepository.get(), outputPortProductCoreRepository.get(), outputPortNfInvoiceEntryRepository.get());
     }
 
 

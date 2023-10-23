@@ -7,8 +7,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.bson.codecs.pojo.annotations.BsonId;
 
-import java.math.BigDecimal;
-
 @Getter
 @Setter
 @ToString
@@ -19,8 +17,6 @@ public class ProductsMongoCollection extends PanacheMongoEntityBase {
     private String name;
     private String description;
     private String category;
-    private String priceCurrency;
-    private BigDecimal priceAmount;
     private Double height;
     private Double width;
     private Double depth;

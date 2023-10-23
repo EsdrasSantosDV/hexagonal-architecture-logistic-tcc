@@ -1,6 +1,6 @@
 package hexagonal.architecture.esdras.adapter.out.persistence.inmemory;
 
-import hexagonal.architecture.esdras.application.port.output.products.persistence.OutputPortProductRepository;
+import hexagonal.architecture.esdras.application.port.output.products.persistence.OutputPortProduct;
 import hexagonal.architecture.esdras.domain.entity.ProductDomain;
 import hexagonal.architecture.esdras.domain.vo.ProductIdDomain;
 import io.quarkus.arc.lookup.LookupIfProperty;
@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @LookupIfProperty(name = "persistence", stringValue = "inmemory", lookupIfMissing = true)
 @ApplicationScoped
-public class ProductsMemoryAdapter implements OutputPortProductRepository {
+public class ProductsMemoryAdapter implements OutputPortProduct {
 
 
     private final Map<ProductIdDomain, ProductDomain> products = new ConcurrentHashMap<>();

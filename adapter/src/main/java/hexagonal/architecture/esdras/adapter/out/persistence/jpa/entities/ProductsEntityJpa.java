@@ -1,12 +1,10 @@
-package hexagonal.architecture.esdras.adapter.out.persistence.jpa;
+package hexagonal.architecture.esdras.adapter.out.persistence.jpa.entities;
 
 
 import hexagonal.architecture.esdras.domain.vo.ProductCategoryDomain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "product")
@@ -22,12 +20,6 @@ public class ProductsEntityJpa {
 
     @Column(nullable = false)
     private String description;
-
-    @Column(nullable = false)
-    private String priceCurrency;
-
-    @Column(nullable = false)
-    private BigDecimal priceAmount;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

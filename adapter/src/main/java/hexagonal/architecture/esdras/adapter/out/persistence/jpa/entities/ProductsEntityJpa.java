@@ -1,4 +1,4 @@
-package hexagonal.architecture.esdras.adapter.out.persistence.jpa;
+package hexagonal.architecture.esdras.adapter.out.persistence.jpa.entities;
 
 
 import hexagonal.architecture.esdras.domain.vo.ProductCategoryDomain;

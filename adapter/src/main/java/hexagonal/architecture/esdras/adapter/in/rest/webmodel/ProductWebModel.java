@@ -1,9 +1,6 @@
-package hexagonal.architecture.esdras.adapter.in.rest.products.webmodel;
+package hexagonal.architecture.esdras.adapter.in.rest.webmodel;
 
 import hexagonal.architecture.esdras.domain.entity.ProductDomain;
-
-import java.math.BigDecimal;
-import java.util.Currency;
 
 public record ProductWebModel(
         String id,
@@ -13,8 +10,6 @@ public record ProductWebModel(
         Double height,
         Double width,
         Double depth,
-        Currency currency,
-        BigDecimal amount,
         String storageInstructions,
         String restrictions
 ) {
@@ -27,8 +22,6 @@ public record ProductWebModel(
                 productDomain.getHeight(),
                 productDomain.getWidth(),
                 productDomain.getDepth(),
-                productDomain.getPrice().currency(),
-                productDomain.getPrice().amount(),
                 productDomain.getStorageInstructions(),
                 productDomain.getRestrictions()
         );

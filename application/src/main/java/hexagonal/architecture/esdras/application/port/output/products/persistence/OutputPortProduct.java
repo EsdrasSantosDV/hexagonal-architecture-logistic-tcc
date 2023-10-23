@@ -4,7 +4,7 @@ import hexagonal.architecture.esdras.domain.entity.ProductDomain;
 
 import java.util.Optional;
 
-public interface OutputPortProductRepository {
+public interface OutputPortProduct {
     ProductDomain save(ProductDomain productDomain);
 
     Optional<ProductDomain> findById(String id);

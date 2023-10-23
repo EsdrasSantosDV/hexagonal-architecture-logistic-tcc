@@ -8,15 +8,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import java.math.BigDecimal;
-import java.util.Currency;
-
 
 @Data
 @NoArgsConstructor
 @Schema(
-        description = "DTO que representa um produto",
-        example = "{\"name\":\"Laptop Gamer\",\"description\":\"Um laptop de alto desempenho para jogos.\",\"category\":\"ELECTRONICS\",\"height\":2.5,\"width\":30.0,\"depth\":25.0,\"currency\":\"USD\",\"amount\":50.00,\"storageInstructions\":\"Mantenha em local fresco e seco.\",\"restrictions\":\"esdras\"}"
+        description = "DTO que representa um produto"
 )
 public class ProductDto {
     @NotBlank(message = "Nome é obrigatório.")
@@ -44,15 +40,6 @@ public class ProductDto {
     @PositiveOrZero(message = "Profundidade não pode ser negativa.")
     @Schema(description = "Profundidade do produto.", example = "25.0")
     private Double depth;
-
-    @NotNull(message = "Currency cannot be null.")
-    @Schema(description = "Moeda do produto.", example = "USD")
-    private Currency currency;
-
-    @NotNull(message = "Amount cannot be null.")
-    @PositiveOrZero(message = "Amount must be positive or zero.")
-    @Schema(description = "Valor do produto.", example = "50.00")
-    private BigDecimal amount;
 
     @Schema(description = "Instruções de armazenamento do produto.", example = "Mantenha em local fresco e seco.")
     private String storageInstructions;

@@ -3,7 +3,7 @@ package hexagonal.architecture.esdras.adapter.in.rest.products;
 import hexagonal.architecture.esdras.adapter.in.rest.common.ResultValidator;
 import hexagonal.architecture.esdras.adapter.in.rest.products.dto.ProductDto;
 import hexagonal.architecture.esdras.adapter.in.rest.products.mapper.ProductMapper;
-import hexagonal.architecture.esdras.adapter.in.rest.products.webmodel.ProductWebModel;
+import hexagonal.architecture.esdras.adapter.in.rest.webmodel.ProductWebModel;
 import hexagonal.architecture.esdras.application.port.input.products.InputPortCreateProductUseCase;
 import hexagonal.architecture.esdras.application.port.input.products.exceptions.ProductAlreadyExistsException;
 import hexagonal.architecture.esdras.domain.entity.ProductDomain;
@@ -31,7 +31,7 @@ import static hexagonal.architecture.esdras.adapter.in.rest.common.ControllerCom
  *
  * @author esdras
  */
-@Path("/create-product")
+@Path("/products")
 @Produces(MediaType.APPLICATION_JSON)
 public class CreateProductController {
     private final InputPortCreateProductUseCase createProductUseCase;
@@ -46,7 +46,7 @@ public class CreateProductController {
 
 
     @POST
-    @Path("/")
+    @Path("/create-product")
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(
             summary = "Cria um novo produto",
@@ -74,7 +74,7 @@ public class CreateProductController {
             return Response.ok(ProductWebModel.fromDomainModel(productDomain)).build();
         } catch (ProductAlreadyExistsException e) {
             throw clientErrorException(
-                    Response.Status.BAD_REQUEST, "Produto ja possui cadastro");
+                    Response.Status.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(new ResultValidator("Ocorreu um erro no processamento da requisição.")).build();

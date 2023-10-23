@@ -1,6 +1,9 @@
 package hexagonal.architecture.esdras.adapter.out.persistence.jpa;
 
-import hexagonal.architecture.esdras.application.port.output.products.persistence.OutputPortProductRepository;
+import hexagonal.architecture.esdras.adapter.out.persistence.jpa.entities.ProductsEntityJpa;
+import hexagonal.architecture.esdras.adapter.out.persistence.jpa.mappers.ProductEntityMapper;
+import hexagonal.architecture.esdras.adapter.out.persistence.jpa.repositories.JpaProductEntityPanacheRepository;
+import hexagonal.architecture.esdras.application.port.output.products.persistence.OutputPortProduct;
 import hexagonal.architecture.esdras.domain.entity.ProductDomain;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -10,7 +13,7 @@ import java.util.Optional;
 
 @LookupIfProperty(name = "persistence", stringValue = "mysql")
 @ApplicationScoped
-public class JpaProductEntityAdapterRepository implements OutputPortProductRepository {
+public class JpaProductEntityAdapterRepository implements OutputPortProduct {
 
     private final JpaProductEntityPanacheRepository panacheRepository;
 
@@ -24,7 +27,7 @@ public class JpaProductEntityAdapterRepository implements OutputPortProductRepos
     public ProductDomain save(ProductDomain productDomain) {
         ProductsEntityJpa jpaEntity = ProductEntityMapper.domainToJpaEntity(productDomain);
 
-        panacheRepository.persist(jpaEntity);
+        panacheRepository.getEntityManager().merge(jpaEntity);
 
         return ProductEntityMapper.jpaEntityToDomain(jpaEntity);
     }

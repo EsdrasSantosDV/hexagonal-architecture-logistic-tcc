@@ -1,9 +1,6 @@
-package hexagonal.architecture.esdras.adapter.out.persistence.jpa;
+package hexagonal.architecture.esdras.adapter.out.persistence.jpa.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +11,7 @@ import java.util.Date;
 @Table(name = "produto_core")
 @Getter
 @Setter
-public class ProdutoCoreEntityJpa {
+public class ProductCoreEntityJpa {
 
     @Id
     private String sku;
@@ -33,10 +30,12 @@ public class ProdutoCoreEntityJpa {
     private Date dueDate;
 
     @ManyToOne
-    private CartJpaEntity cart;
+    private NfInvoiceEntryEntityJpa nf_entry;
 
     @ManyToOne
-    private ProductJpaEntity product;
+    private ProductsEntityJpa product;
 
+
+    private int quantity;
 
 }

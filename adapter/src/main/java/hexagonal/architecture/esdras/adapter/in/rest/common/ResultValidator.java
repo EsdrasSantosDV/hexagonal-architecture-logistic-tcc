@@ -19,7 +19,7 @@ public class ResultValidator {
     public ResultValidator(Set<? extends ConstraintViolation<?>> violations) {
         this.success = false;
         this.messages = violations.stream()
-                .map(cv -> cv.getMessage())
+                .map(ConstraintViolation::getMessage)
                 .collect(Collectors.toList());
     }
 

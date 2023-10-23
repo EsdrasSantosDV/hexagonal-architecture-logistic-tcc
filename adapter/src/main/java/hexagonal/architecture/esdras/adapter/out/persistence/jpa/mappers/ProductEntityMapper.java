@@ -1,4 +1,4 @@
-package hexagonal.architecture.esdras.adapter.out.persistence.jpa;
+package hexagonal.architecture.esdras.adapter.out.persistence.jpa.mappers;
 
 import hexagonal.architecture.esdras.adapter.out.persistence.jpa.entities.ProductsEntityJpa;
 import hexagonal.architecture.esdras.domain.entity.ProductDomain;
@@ -26,7 +26,7 @@ public class ProductEntityMapper {
         return entity;
     }
 
-    static Optional<ProductDomain> toModelEntityOptional(ProductsEntityJpa jpaEntity) {
+    public static Optional<ProductDomain> toModelEntityOptional(ProductsEntityJpa jpaEntity) {
         return Optional.ofNullable(jpaEntity).map(ProductEntityMapper::jpaEntityToDomain);
     }
 

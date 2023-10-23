@@ -1,6 +1,6 @@
 package hexagonal.architecture.esdras.adapter.out.persistence.nosql.mongo;
 
-import hexagonal.architecture.esdras.application.port.output.products.persistence.OutputPortProductRepository;
+import hexagonal.architecture.esdras.application.port.output.products.persistence.OutputPortProduct;
 import hexagonal.architecture.esdras.domain.entity.ProductDomain;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @LookupIfProperty(name = "persistence", stringValue = "nosql")
 @ApplicationScoped
-public class ProductsCollectionAdapterRepository implements OutputPortProductRepository {
+public class ProductsCollectionAdapterRepository implements OutputPortProduct {
     private final ProductsCollectionPanancheRepository mongoRepository;
 
     public ProductsCollectionAdapterRepository(ProductsCollectionPanancheRepository mongoRepository) {

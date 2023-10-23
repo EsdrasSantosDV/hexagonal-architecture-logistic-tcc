@@ -1,10 +1,11 @@
-package hexagonal.architecture.esdras.adapter.out.persistence.jpa;
+package hexagonal.architecture.esdras.adapter.out.persistence.jpa.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,8 +32,8 @@ public class NfInvoiceEntryEntityJpa {
     @Column(nullable = false)
     private BigDecimal priceAmount;
 
-    @OneToMany(mappedBy = "invoice_entry_products", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductsEntityJpa> products;
+    @OneToMany(mappedBy = "nf_entry", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductCoreEntityJpa> products = new ArrayList<>();
 
 
 }

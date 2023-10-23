@@ -34,7 +34,7 @@ class QuarkusAppConfig {
     @Produces
     @ApplicationScoped
     InputPortCreateInvoiceEntryUseCase inputPortCreateInvoiceEntryUseCase() {
-        return new CreateInvoiceService(outputPortProductRepository.get(), outputPortProductCoreRepository.get(), outputPortNfInvoiceEntryRepository.get());
+        return new CreateInvoiceService(outputPortProductRepository.get(), outputPortNfInvoiceEntryRepository.get());
     }
 
 

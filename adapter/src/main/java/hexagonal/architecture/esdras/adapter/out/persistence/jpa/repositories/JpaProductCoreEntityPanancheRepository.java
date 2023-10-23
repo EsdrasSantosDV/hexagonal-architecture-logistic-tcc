@@ -6,5 +6,5 @@ import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class JpaProductCoreEntityPanancheRepository implements PanacheRepositoryBase<ProductCoreEntityJpa, String> {
+public class JpaProductCoreEntityPanancheRepository implements PanacheRepositoryBase<ProductCoreEntityJpa, Integer> {
 }

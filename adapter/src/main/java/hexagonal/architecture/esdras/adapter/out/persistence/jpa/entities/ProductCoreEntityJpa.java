@@ -14,6 +14,10 @@ import java.util.Date;
 public class ProductCoreEntityJpa {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(nullable = false)
     private String sku;
 
     @Column(nullable = false)

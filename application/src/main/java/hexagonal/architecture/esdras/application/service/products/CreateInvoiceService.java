@@ -5,7 +5,6 @@ import hexagonal.architecture.esdras.application.port.input.invoiceentry.command
 import hexagonal.architecture.esdras.application.port.input.invoiceentry.commands.SendNfCommand;
 import hexagonal.architecture.esdras.application.port.input.invoiceentry.exceptions.ProductNotExistException;
 import hexagonal.architecture.esdras.application.port.output.nfinvoiceentry.persistence.OutputPortNfInvoiceEntry;
-import hexagonal.architecture.esdras.application.port.output.productcore.persistence.OutputPortProductCore;
 import hexagonal.architecture.esdras.application.port.output.products.persistence.OutputPortProduct;
 import hexagonal.architecture.esdras.domain.entity.InvoiceEntryDomain;
 import hexagonal.architecture.esdras.domain.entity.ProductCoreDomain;
@@ -23,7 +22,7 @@ public class CreateInvoiceService implements InputPortCreateInvoiceEntryUseCase 
 
     private final OutputPortNfInvoiceEntry outputPortNfInvoiceEntryRepository;
 
-    public CreateInvoiceService(OutputPortProduct productRepository, OutputPortProductCore productCoreRepository, OutputPortNfInvoiceEntry outputPortNfInvoiceEntryRepository) {
+    public CreateInvoiceService(OutputPortProduct productRepository, OutputPortNfInvoiceEntry outputPortNfInvoiceEntryRepository) {
         this.outputPortProductRepository = productRepository;
         this.outputPortNfInvoiceEntryRepository = outputPortNfInvoiceEntryRepository;
     }
@@ -83,6 +82,8 @@ public class CreateInvoiceService implements InputPortCreateInvoiceEntryUseCase 
         productCoreDomain.dateNow();
         productCoreDomain.generateSkuFromProduct();
         productCoreDomain.setQuantity(entry.quantity());
+
+        System.out.println(productCoreDomain);
 
 
         return productCoreDomain;

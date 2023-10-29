@@ -66,3 +66,7 @@ values (60, 0.5, 50, 'CLOTHING_AND_APPAREL', 'Blusa confortável em algodão pur
        (170, 100, 50, 'CYCLING_EQUIPMENT', 'Bicicleta projetada para trilhas e terrenos irregulares.',
         '46Z6FL2NF95QVYT6388CYWRKY97NXR', 'Bicicleta de Montanha', 'Requer montagem.',
         'Mantenha em local seco. Evite exposição prolongada ao sol.');
+
+
+insert into logistic.stock (id, name)
+values ('ESDRAS', 'GATAO');

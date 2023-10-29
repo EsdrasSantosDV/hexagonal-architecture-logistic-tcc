@@ -6,9 +6,11 @@ import hexagonal.architecture.esdras.application.port.input.invoiceentry.command
 import hexagonal.architecture.esdras.application.port.input.invoiceentry.exceptions.ProductNotExistException;
 import hexagonal.architecture.esdras.application.port.output.nfinvoiceentry.persistence.OutputPortNfInvoiceEntry;
 import hexagonal.architecture.esdras.application.port.output.products.persistence.OutputPortProduct;
+import hexagonal.architecture.esdras.application.port.output.stock.persistence.OutputPortStock;
 import hexagonal.architecture.esdras.domain.entity.InvoiceEntryDomain;
 import hexagonal.architecture.esdras.domain.entity.ProductCoreDomain;
 import hexagonal.architecture.esdras.domain.entity.ProductDomain;
+import hexagonal.architecture.esdras.domain.entity.StockDomain;
 import hexagonal.architecture.esdras.domain.exceptions.QuantityInvalidException;
 import hexagonal.architecture.esdras.domain.vo.MoneyDomain;
 import hexagonal.architecture.esdras.domain.vo.NfEntryIdDomain;
@@ -22,9 +24,12 @@ public class CreateInvoiceService implements InputPortCreateInvoiceEntryUseCase 
 
     private final OutputPortNfInvoiceEntry outputPortNfInvoiceEntryRepository;
 
-    public CreateInvoiceService(OutputPortProduct productRepository, OutputPortNfInvoiceEntry outputPortNfInvoiceEntryRepository) {
+    private final OutputPortStock outputPortStockRepository;
+
+    public CreateInvoiceService(OutputPortProduct productRepository, OutputPortNfInvoiceEntry outputPortNfInvoiceEntryRepository, OutputPortStock outputPortStockRepository) {
         this.outputPortProductRepository = productRepository;
         this.outputPortNfInvoiceEntryRepository = outputPortNfInvoiceEntryRepository;
+        this.outputPortStockRepository = outputPortStockRepository;
     }
 
 
@@ -38,8 +43,21 @@ public class CreateInvoiceService implements InputPortCreateInvoiceEntryUseCase 
         InvoiceEntryDomain nfEntry = buildInvoiceEntryDomain(command);
         addProductsToInvoiceEntry(nfEntry, productCoreDomains);
 
+        Optional<StockDomain> esdrasStockOpt = this.outputPortStockRepository.findById("ESDRAS");
+        if (esdrasStockOpt.isPresent()) {
+            StockDomain esdrasStock = esdrasStockOpt.get();
+            for (ProductCoreDomain productCoreDomain : productCoreDomains) {
+                ProductDomain product = productCoreDomain.getProduct();
+                esdrasStock.movementEntry(product, productCoreDomain.getQuantity());
+            }
+            this.outputPortStockRepository.save(esdrasStock);
+        }
+
+        System.out.println("estamos 2" + esdrasStockOpt);
+
         return this.outputPortNfInvoiceEntryRepository.save(nfEntry);
     }
+
 
     private List<ProductCoreDomain> getProductCoreDomains(SendNfCommand command, List<String> missingProducts) {
         return command.productNfInvoiceEntries()
@@ -92,7 +110,7 @@ public class CreateInvoiceService implements InputPortCreateInvoiceEntryUseCase 
         productCoreDomain.dateNow();
         productCoreDomain.generateSkuFromProduct();
         productCoreDomain.setQuantity(entry.quantity());
-        
+
 
         return productCoreDomain;
     }

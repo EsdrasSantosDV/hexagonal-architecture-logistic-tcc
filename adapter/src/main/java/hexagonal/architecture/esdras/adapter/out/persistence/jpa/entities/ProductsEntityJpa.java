@@ -1,8 +1,10 @@
 package hexagonal.architecture.esdras.adapter.out.persistence.jpa.entities;
 
 
-import hexagonal.architecture.esdras.domain.vo.ProductCategoryDomain;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,9 +23,9 @@ public class ProductsEntityJpa {
     @Column(nullable = false)
     private String description;
 
-    @Enumerated(EnumType.STRING)
+
     @Column(nullable = false)
-    private ProductCategoryDomain category;
+    private String category;
 
     @Column(nullable = true)
     private Double height;

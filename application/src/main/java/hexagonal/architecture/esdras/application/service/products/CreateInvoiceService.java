@@ -21,7 +21,6 @@ public class CreateInvoiceService implements InputPortCreateInvoiceEntryUseCase 
 
     private final OutputPortProduct outputPortProductRepository;
 
-
     private final OutputPortNfInvoiceEntry outputPortNfInvoiceEntryRepository;
 
     private final OutputPortStock outputPortStockRepository;
@@ -43,21 +42,20 @@ public class CreateInvoiceService implements InputPortCreateInvoiceEntryUseCase 
         InvoiceEntryDomain nfEntry = buildInvoiceEntryDomain(command);
         addProductsToInvoiceEntry(nfEntry, productCoreDomains);
 
-        Optional<StockDomain> esdrasStockOpt = this.outputPortStockRepository.findById("ESDRAS");
-        if (esdrasStockOpt.isPresent()) {
-            StockDomain esdrasStock = esdrasStockOpt.get();
-            for (ProductCoreDomain productCoreDomain : productCoreDomains) {
-                ProductDomain product = productCoreDomain.getProduct();
-                esdrasStock.movementEntry(product, productCoreDomain.getQuantity());
-            }
-            this.outputPortStockRepository.save(esdrasStock);
-        }
+        this.outputPortStockRepository.findByStockMain()
+                .ifPresent(stock -> updateStockWithProducts(stock, productCoreDomains));
 
-        System.out.println("estamos 2" + esdrasStockOpt);
 
         return this.outputPortNfInvoiceEntryRepository.save(nfEntry);
     }
 
+    private void updateStockWithProducts(StockDomain stock, List<ProductCoreDomain> productCoreDomains) {
+        for (ProductCoreDomain productCoreDomain : productCoreDomains) {
+            ProductDomain product = productCoreDomain.getProduct();
+            stock.movementEntry(product, productCoreDomain.getQuantity());
+        }
+        this.outputPortStockRepository.save(stock);
+    }
 
     private List<ProductCoreDomain> getProductCoreDomains(SendNfCommand command, List<String> missingProducts) {
         return command.productNfInvoiceEntries()

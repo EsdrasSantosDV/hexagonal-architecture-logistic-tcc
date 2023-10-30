@@ -39,4 +39,10 @@ public class JpaStockEntityAdapterRepository implements OutputPortStock {
         return StockMapper.toDomainEntityOptional(stock);
 
     }
+
+    @Override
+    public Optional<StockDomain> findByStockMain() {
+        StockEntityJpa stock = panacheRepository.findStockMain().orElse(null);
+        return StockMapper.toDomainEntityOptional(stock);
+    }
 }

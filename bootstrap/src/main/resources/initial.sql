@@ -69,4 +69,4 @@ values (60, 0.5, 50, 'CLOTHING_AND_APPAREL', 'Blusa confortável em algodão pur
 
 
 insert into logistic.stock (id, name)
-values ('ESDRAS', 'GATAO');
+values ('STK012ASDJK129459128SDA12894012408021ASD', 'MAINSTOCK');

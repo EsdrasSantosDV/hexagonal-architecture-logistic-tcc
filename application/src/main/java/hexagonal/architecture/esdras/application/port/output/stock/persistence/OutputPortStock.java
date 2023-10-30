@@ -9,4 +9,7 @@ public interface OutputPortStock {
     StockDomain save(StockDomain stockDomain);
 
     Optional<StockDomain> findById(String id);
+
+    Optional<StockDomain> findByStockMain();
+
 }

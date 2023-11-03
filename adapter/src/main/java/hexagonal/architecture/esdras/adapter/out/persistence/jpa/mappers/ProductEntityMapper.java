@@ -5,6 +5,7 @@ import hexagonal.architecture.esdras.domain.entity.ProductDomain;
 import hexagonal.architecture.esdras.domain.vo.ProductCategoryDomain;
 import hexagonal.architecture.esdras.domain.vo.ProductIdDomain;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ProductEntityMapper {
@@ -45,5 +46,9 @@ public class ProductEntityMapper {
                 .build();
     }
 
+
+    public static List<ProductDomain> toModelEntities(List<ProductsEntityJpa> jpaEntities) {
+        return jpaEntities.stream().map(ProductEntityMapper::jpaEntityToDomain).toList();
+    }
 
 }

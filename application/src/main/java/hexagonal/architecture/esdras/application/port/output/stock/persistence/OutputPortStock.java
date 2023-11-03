@@ -12,4 +12,5 @@ public interface OutputPortStock {
 
     Optional<StockDomain> findByStockMain();
 
+
 }

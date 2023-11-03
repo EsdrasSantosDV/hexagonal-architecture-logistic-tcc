@@ -6,6 +6,7 @@ import hexagonal.architecture.esdras.domain.vo.ProductIdDomain;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -29,5 +30,10 @@ public class ProductsMemoryAdapter implements OutputPortProduct {
     @Override
     public Optional<ProductDomain> findById(String id) {
         return Optional.ofNullable(products.get(new ProductIdDomain(id)));
+    }
+
+    @Override
+    public List<ProductDomain> findByAllIds(List<String> ids) {
+        return null;
     }
 }

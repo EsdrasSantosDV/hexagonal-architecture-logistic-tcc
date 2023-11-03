@@ -9,6 +9,7 @@ import io.quarkus.arc.lookup.LookupIfProperty;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @LookupIfProperty(name = "persistence", stringValue = "mysql")
@@ -36,6 +37,11 @@ public class JpaProductEntityAdapterRepository implements OutputPortProduct {
     public Optional<ProductDomain> findById(String id) {
         ProductsEntityJpa product = panacheRepository.findById(id);
         return ProductEntityMapper.toModelEntityOptional(product);
+    }
+
+    @Override
+    public List<ProductDomain> findByAllIds(List<String> ids) {
+        return ProductEntityMapper.toModelEntities(panacheRepository.findByAllIds(ids));
     }
 
 

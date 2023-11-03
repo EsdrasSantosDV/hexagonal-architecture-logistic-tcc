@@ -5,6 +5,7 @@ import hexagonal.architecture.esdras.domain.entity.ProductDomain;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.util.List;
 import java.util.Optional;
 
 @LookupIfProperty(name = "persistence", stringValue = "nosql")
@@ -30,4 +31,11 @@ public class ProductsCollectionAdapterRepository implements OutputPortProduct {
 
         return ProductsCollectionMapper.productDomainOptional(product);
     }
+
+    @Override
+    public List<ProductDomain> findByAllIds(List<String> ids) {
+        return null;
+    }
+
+
 }

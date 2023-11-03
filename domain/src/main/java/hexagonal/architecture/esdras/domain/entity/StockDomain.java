@@ -76,4 +76,31 @@ public class StockDomain {
     }
 
 
+    //    public int calculateMinimumStock(ProductDomain product, int replenishmentTimeInDays, int daysPeriod) {
+//        ProductIdDomain productId = product.getId();
+//        int averageDailyConsumption = calculateAverageDailyConsumption(productId, daysPeriod);
+//
+//        return averageDailyConsumption * replenishmentTimeInDays;
+//    }
+//
+    public int calculateMinimumStockWithSafetyMargin(ProductDomain product, int replenishmentTimeInDays, int daysPeriod) {
+        int minimumStock = calculateMinimumStock(product, replenishmentTimeInDays, daysPeriod);
+        int safetyMargin = (int) (minimumStock * 0.15); // 15% de margem de segurança
+
+        return minimumStock + safetyMargin;
+    }
+
+
+//
+//    private int calculateAverageDailyConsumption(ProductIdDomain productId, int daysPeriod) {
+//        int totalQuantity = 0;
+//        for (MovementDomain movement : movements) {
+//            if (movement.isOutgoing() && movement.getProduct().getId().equals(productId)) {
+//                totalQuantity += movement.getQuantity();
+//            }
+//        }
+//        return daysPeriod > 0 ? totalQuantity / daysPeriod : 0;
+//    }
+
+
 }

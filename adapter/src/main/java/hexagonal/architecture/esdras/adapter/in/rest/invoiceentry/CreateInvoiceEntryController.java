@@ -78,7 +78,7 @@ public class CreateInvoiceEntryController {
                     Response.Status.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(new ResultValidator("Ocorreu um erro no processamento da requisição.")).build();
+                    .entity(new ResultValidator("Ocorreu um erro no processamento da requisição." + e.getMessage())).build();
         }
 
     }

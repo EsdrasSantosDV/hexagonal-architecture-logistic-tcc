@@ -3,7 +3,7 @@ package hexagonal.architecture.esdras.adapter.out.persistence.jpa;
 
 import hexagonal.architecture.esdras.adapter.out.persistence.jpa.entities.ProductCoreEntityJpa;
 import hexagonal.architecture.esdras.adapter.out.persistence.jpa.mappers.ProductCoreMapper;
-import hexagonal.architecture.esdras.adapter.out.persistence.jpa.repositories.JpaProductCoreEntityPanancheRepository;
+import hexagonal.architecture.esdras.adapter.out.persistence.jpa.repositories.JpaProductCoreEntityPanacheRepository;
 import hexagonal.architecture.esdras.application.port.output.productcore.persistence.OutputPortProductCore;
 import hexagonal.architecture.esdras.domain.entity.ProductCoreDomain;
 import io.quarkus.arc.lookup.LookupIfProperty;
@@ -16,9 +16,9 @@ import java.util.Optional;
 @ApplicationScoped
 public class JpaProductCoreEntityAdapterRepository implements OutputPortProductCore {
 
-    private final JpaProductCoreEntityPanancheRepository panacheRepository;
+    private final JpaProductCoreEntityPanacheRepository panacheRepository;
 
-    public JpaProductCoreEntityAdapterRepository(JpaProductCoreEntityPanancheRepository panacheRepository) {
+    public JpaProductCoreEntityAdapterRepository(JpaProductCoreEntityPanacheRepository panacheRepository) {
         this.panacheRepository = panacheRepository;
     }
 
@@ -34,8 +34,11 @@ public class JpaProductCoreEntityAdapterRepository implements OutputPortProductC
     }
 
     @Override
-    public Optional<ProductCoreDomain> findBySku(Integer id) {
+    public Optional<ProductCoreDomain> findBySku(String id) {
         ProductCoreEntityJpa product = panacheRepository.findById(id);
         return ProductCoreMapper.toDomainEntityOptional(product);
+    }
+
+    public static class JpaInvoiceOutEntityAdapterRepository {
     }
 }

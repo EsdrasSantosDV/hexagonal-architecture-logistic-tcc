@@ -13,11 +13,8 @@ import java.util.Date;
 @Setter
 public class ProductCoreEntityJpa {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
 
-    @Column(nullable = false)
+    @Id
     private String sku;
 
     @Column(nullable = false)
@@ -34,7 +31,11 @@ public class ProductCoreEntityJpa {
     private Date dueDate;
 
     @ManyToOne
+    @JoinColumn(name = "nf_entry", updatable = false)
     private NfInvoiceEntryEntityJpa nf_entry;
+
+    @ManyToOne
+    private NfInvoiceOutEntityJpa nf_out;
 
     @ManyToOne
     private ProductsEntityJpa product;

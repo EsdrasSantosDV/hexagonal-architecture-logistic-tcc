@@ -1,6 +1,7 @@
 package hexagonal.architecture.esdras.adapter.out.persistence.jpa.mappers;
 
 import hexagonal.architecture.esdras.adapter.out.persistence.jpa.entities.NfInvoiceEntryEntityJpa;
+import hexagonal.architecture.esdras.adapter.out.persistence.jpa.entities.NfInvoiceOutEntityJpa;
 import hexagonal.architecture.esdras.adapter.out.persistence.jpa.entities.ProductCoreEntityJpa;
 import hexagonal.architecture.esdras.domain.entity.ProductCoreDomain;
 import hexagonal.architecture.esdras.domain.vo.MoneyDomain;
@@ -49,6 +50,25 @@ public class ProductCoreMapper {
         entityJpa.setDueDate(productCoreDomain.getDueDate());
         entityJpa.setProduct(ProductEntityMapper.domainToJpaEntity(productCoreDomain.getProduct()));
         entityJpa.setNf_entry(jpa);
+
+        return entityJpa;
+    }
+
+    public static ProductCoreEntityJpa toJpaEntityBiDirectionalOut(NfInvoiceOutEntityJpa jpa, ProductCoreDomain productCoreDomain) {
+        if (productCoreDomain == null) {
+            return null;
+        }
+
+        ProductCoreEntityJpa entityJpa = new ProductCoreEntityJpa();
+
+        entityJpa.setSku(productCoreDomain.getSku().value());
+        entityJpa.setPriceCurrency(productCoreDomain.getPrice().currency().getCurrencyCode());
+        entityJpa.setPriceAmount(productCoreDomain.getPrice().amount());
+        entityJpa.setQuantity(productCoreDomain.getQuantity());
+        entityJpa.setEntryDate(productCoreDomain.getEntryDate());
+        entityJpa.setDueDate(productCoreDomain.getDueDate());
+        entityJpa.setProduct(ProductEntityMapper.domainToJpaEntity(productCoreDomain.getProduct()));
+        entityJpa.setNf_out(jpa);
 
         return entityJpa;
     }

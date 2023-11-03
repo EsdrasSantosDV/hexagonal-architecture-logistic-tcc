@@ -4,6 +4,7 @@ package hexagonal.architecture.esdras.bootstrap;
 import hexagonal.architecture.esdras.application.port.input.invoiceentry.InputPortCreateInvoiceEntryUseCase;
 import hexagonal.architecture.esdras.application.port.input.invoiceout.InputPortCreateInvoiceOutUseCase;
 import hexagonal.architecture.esdras.application.port.input.products.InputPortCreateProductUseCase;
+import hexagonal.architecture.esdras.application.port.input.stocklevels.InputPortGetStockLevels;
 import hexagonal.architecture.esdras.application.port.output.nfinvoiceentry.persistence.OutputPortNfInvoiceEntry;
 import hexagonal.architecture.esdras.application.port.output.nfinvoiceout.persistence.OutputPortNfInvoiceOut;
 import hexagonal.architecture.esdras.application.port.output.productcore.persistence.OutputPortProductCore;
@@ -12,6 +13,7 @@ import hexagonal.architecture.esdras.application.port.output.stock.persistence.O
 import hexagonal.architecture.esdras.application.service.products.CreateInvoiceOutService;
 import hexagonal.architecture.esdras.application.service.products.CreateInvoiceService;
 import hexagonal.architecture.esdras.application.service.products.CreateProductService;
+import hexagonal.architecture.esdras.application.service.products.StockLevelsMaximumMinService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.Produces;
@@ -53,6 +55,12 @@ class QuarkusAppConfig {
     @ApplicationScoped
     InputPortCreateInvoiceOutUseCase inputPortCreateInvoiceOutUseCase() {
         return new CreateInvoiceOutService(outputPortProductRepository.get(), outputPortNfInvoiceOutsRepository.get(), outputPortStockRepository.get(), outputPortProductCoreRepository.get());
+    }
+
+    @Produces
+    @ApplicationScoped
+    InputPortGetStockLevels inputPortGetStockLevels() {
+        return new StockLevelsMaximumMinService(outputPortProductRepository.get(), outputPortStockRepository.get());
     }
 
 

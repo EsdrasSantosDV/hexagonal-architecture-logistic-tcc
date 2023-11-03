@@ -26,4 +26,5 @@ public class ProductDomain {
     private String storageInstructions;
     private String restrictions;
 
+
 }

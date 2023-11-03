@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /*
  * StockDomain
@@ -73,6 +74,38 @@ public class StockDomain {
                 .dateOfMovement(new Date())
                 .build();
         movements.add(movement);
+    }
+
+
+    public int minStock(List<MovementDomain> movementsByProductOutgoing, int replenishmentTimeInDays, double margin, int daysPeriod) {
+        List<MovementDomain> safeMovements = Optional.ofNullable(movementsByProductOutgoing).orElseGet(Collections::emptyList);
+        int minimumStock = calculateMinimumStock(safeMovements, replenishmentTimeInDays, daysPeriod);
+        int safetyMargin = (int) (minimumStock * (margin / 100));
+        return minimumStock + safetyMargin;
+    }
+
+    public int calculateMinimumStock(List<MovementDomain> movementsByProductOutgoing, int replenishmentTimeInDays, int daysPeriod) {
+        int averageDailyConsumption = calculateAverageDailyConsumption(movementsByProductOutgoing, daysPeriod);
+        return averageDailyConsumption * replenishmentTimeInDays;
+    }
+
+    public Map<ProductIdDomain, List<MovementDomain>> getMovementsByProductEntry() {
+        return movements.stream().filter(MovementDomain::isEntry)
+                .collect(Collectors.groupingBy(movement -> movement.getProduct().getId()));
+    }
+
+    public Map<ProductIdDomain, List<MovementDomain>> getMovementsByProductOutgoing() {
+        return movements.stream().filter(MovementDomain::isOutgoing)
+                .collect(Collectors.groupingBy(movement -> movement.getProduct().getId()));
+    }
+
+    private int calculateAverageDailyConsumption(List<MovementDomain> movementsByProductOutgoing, int daysPeriod) {
+        int totalQuantity = 0;
+
+        for (MovementDomain movement : movementsByProductOutgoing) {
+            totalQuantity += movement.getQuantity();
+        }
+        return daysPeriod > 0 ? totalQuantity / daysPeriod : 0;
     }
 
 

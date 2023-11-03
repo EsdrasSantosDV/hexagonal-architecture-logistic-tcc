@@ -2,6 +2,7 @@ package hexagonal.architecture.esdras.application.port.output.products.persisten
 
 import hexagonal.architecture.esdras.domain.entity.ProductDomain;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface OutputPortProduct {
@@ -9,5 +10,7 @@ public interface OutputPortProduct {
 
     Optional<ProductDomain> findById(String id);
 
+
+    List<ProductDomain> findByAllIds(List<String> ids);
 
 }

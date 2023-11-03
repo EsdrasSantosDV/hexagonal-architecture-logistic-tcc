@@ -2,7 +2,7 @@ package hexagonal.architecture.esdras.adapter.out.persistence.jpa;
 
 import hexagonal.architecture.esdras.adapter.out.persistence.jpa.entities.NfInvoiceEntryEntityJpa;
 import hexagonal.architecture.esdras.adapter.out.persistence.jpa.mappers.NfInvoiceEntryMapper;
-import hexagonal.architecture.esdras.adapter.out.persistence.jpa.repositories.JpaInvoiceEntryEntityPanancheRepository;
+import hexagonal.architecture.esdras.adapter.out.persistence.jpa.repositories.JpaInvoiceEntryEntityPanacheRepository;
 import hexagonal.architecture.esdras.application.port.output.nfinvoiceentry.persistence.OutputPortNfInvoiceEntry;
 import hexagonal.architecture.esdras.domain.entity.InvoiceEntryDomain;
 import io.quarkus.arc.lookup.LookupIfProperty;
@@ -15,9 +15,9 @@ import java.util.Optional;
 @ApplicationScoped
 public class JpaInvoiceEntryEntityAdapterRepository implements OutputPortNfInvoiceEntry {
 
-    private final JpaInvoiceEntryEntityPanancheRepository panacheRepository;
+    private final JpaInvoiceEntryEntityPanacheRepository panacheRepository;
 
-    public JpaInvoiceEntryEntityAdapterRepository(JpaInvoiceEntryEntityPanancheRepository panacheRepository) {
+    public JpaInvoiceEntryEntityAdapterRepository(JpaInvoiceEntryEntityPanacheRepository panacheRepository) {
         this.panacheRepository = panacheRepository;
     }
 

@@ -27,6 +27,7 @@ public class ItemStockDomain {
         this.quantity += amount;
     }
 
+
     public void decreaseQuantity(int amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Amount to decrease should be positive");

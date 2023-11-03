@@ -3,7 +3,7 @@ package hexagonal.architecture.esdras.adapter.out.persistence.jpa;
 
 import hexagonal.architecture.esdras.adapter.out.persistence.jpa.entities.StockEntityJpa;
 import hexagonal.architecture.esdras.adapter.out.persistence.jpa.mappers.StockMapper;
-import hexagonal.architecture.esdras.adapter.out.persistence.jpa.repositories.JpaStockPanancheRepository;
+import hexagonal.architecture.esdras.adapter.out.persistence.jpa.repositories.JpaStockPanacheRepository;
 import hexagonal.architecture.esdras.application.port.output.stock.persistence.OutputPortStock;
 import hexagonal.architecture.esdras.domain.entity.StockDomain;
 import io.quarkus.arc.lookup.LookupIfProperty;
@@ -16,9 +16,9 @@ import java.util.Optional;
 @ApplicationScoped
 public class JpaStockEntityAdapterRepository implements OutputPortStock {
 
-    private final JpaStockPanancheRepository panacheRepository;
+    private final JpaStockPanacheRepository panacheRepository;
 
-    public JpaStockEntityAdapterRepository(JpaStockPanancheRepository panacheRepository) {
+    public JpaStockEntityAdapterRepository(JpaStockPanacheRepository panacheRepository) {
         this.panacheRepository = panacheRepository;
     }
 

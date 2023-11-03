@@ -8,5 +8,5 @@ public interface OutputPortProductCore {
 
     ProductCoreDomain save(ProductCoreDomain productCore);
 
-    Optional<ProductCoreDomain> findBySku(Integer id);
+    Optional<ProductCoreDomain> findBySku(String id);
 }

@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 public record ItemStockIdentifyDomain(String value) {
+
     private static final String ALPHABET = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
 
     private static final String STOCK_FLAG = "STOCK";

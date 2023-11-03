@@ -1,5 +1,6 @@
 package hexagonal.architecture.esdras.domain.entity;
 
+import hexagonal.architecture.esdras.domain.exceptions.QuantityInvalidException;
 import hexagonal.architecture.esdras.domain.vo.MoneyDomain;
 import hexagonal.architecture.esdras.domain.vo.SkuProductDomain;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,14 @@ public class ProductCoreDomain {
 
     public void increaseQuantityBy(int augend) {
         this.quantity += augend;
+    }
+
+    public void decreaseQuantityBy(int augend) throws QuantityInvalidException {
+        if
+        (this.quantity - augend < 0
+        ) throw new QuantityInvalidException("Quantity cannot be negative"
+        );
+        this.quantity -= augend;
     }
 
     public void dateNow() {

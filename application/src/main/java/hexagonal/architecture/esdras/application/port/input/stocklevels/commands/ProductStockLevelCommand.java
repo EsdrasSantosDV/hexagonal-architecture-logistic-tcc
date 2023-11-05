@@ -2,6 +2,10 @@ package hexagonal.architecture.esdras.application.port.input.stocklevels.command
 
 public record ProductStockLevelCommand(
         String productId,
-        Integer replacementTime
+        Integer replacementTime,
+
+        Double orderCost,
+
+        Double storageCost
 ) {
 }

@@ -65,6 +65,7 @@ public class StockLevelsController {
         try {
             return Response.status(Response.Status.CREATED).entity(getStockLevelsUseCase.getStockLevels(StockLevelMapper.toGetStockCommand(request))).build();
         } catch (Exception e) {
+            System.out.println(e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(new ResultValidator("Ocorreu um erro no processamento da requisição." + e.getMessage())).build();
         }

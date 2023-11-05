@@ -52,8 +52,8 @@ public class StockLevelsMaximumMinService implements InputPortGetStockLevels {
 
             int stock = domainStock.get().getStock().get(product.getId()).getQuantity();
             int min = domainStock.get().minStock(movementsExit, productReplacementTimeMap.get(product.getId()).replacementTime(), getStockLevelsCommand.margin(), Period);
-            int max = 0;//TO DO
-            int orderPoint = 0;//TO DO
+            int max = domainStock.get().maxStock(movementsEntry, movementsExit, min, getStockLevelsCommand.margin(), Period, productReplacementTimeMap.get(product.getId()).orderCost(), productReplacementTimeMap.get(product.getId()).storageCost());
+            int orderPoint = domainStock.get().orderPoint(movementsEntry, movementsExit, min, Period, productReplacementTimeMap.get(product.getId()).replacementTime());
             ResultStock result = new ResultStock(
                     product.getId().value(),
                     product.getName(),
@@ -61,7 +61,6 @@ public class StockLevelsMaximumMinService implements InputPortGetStockLevels {
                     min,
                     max,
                     orderPoint
-
             );
             results.add(result);
         }

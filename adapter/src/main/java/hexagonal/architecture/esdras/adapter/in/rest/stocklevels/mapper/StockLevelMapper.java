@@ -21,7 +21,10 @@ public class StockLevelMapper {
     private static ProductStockLevelCommand toProductStockLevelCommand(ProductStockLevelDto dto) {
         return new ProductStockLevelCommand(
                 dto.getProductId(),
-                dto.getReplacementTime()
+                dto.getReplacementTime(),
+                dto.getOrderCost(),
+                dto.getStorageCost()
+
         );
     }
 

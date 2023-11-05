@@ -84,6 +84,28 @@ public class StockDomain {
         return minimumStock + safetyMargin;
     }
 
+    public int maxStock(List<MovementDomain> movementsEntry, List<MovementDomain> movementsByProductOutgoing, int minStock, double margin, int daysPeriod, double orderCost, double storageCost) {
+        List<MovementDomain> safeMovementsOutgoing = Optional.ofNullable(movementsByProductOutgoing).orElseGet(Collections::emptyList);
+        List<MovementDomain> safeMovementsEntry = Optional.ofNullable(movementsEntry).orElseGet(Collections::emptyList);
+        int calculateConsumption = calculateConsumption(safeMovementsOutgoing, daysPeriod);
+        int lec = calculateLEC(calculateConsumption, orderCost, storageCost);
+        return (minStock + lec) + (int) (minStock * (margin / 100));
+    }
+
+    public int calculateLEC(int consumption, double orderCost, double storageCost) {
+        double lec = Math.sqrt((2 * consumption * orderCost) / storageCost);
+        return (int) Math.ceil(lec);
+    }
+
+
+    public int orderPoint(List<MovementDomain> movementsEntry, List<MovementDomain> movementsByProductOutgoing, int minStock, int daysPeriod, int replenishmentTimeInDays) {
+        List<MovementDomain> safeMovementsOutgoing = Optional.ofNullable(movementsByProductOutgoing).orElseGet(Collections::emptyList);
+        List<MovementDomain> safeMovementsEntry = Optional.ofNullable(movementsEntry).orElseGet(Collections::emptyList);
+        int averageDailyConsumption = calculateAverageDailyConsumption(safeMovementsOutgoing, daysPeriod);
+        return minStock + (averageDailyConsumption * replenishmentTimeInDays);
+    }
+
+
     public int calculateMinimumStock(List<MovementDomain> movementsByProductOutgoing, int replenishmentTimeInDays, int daysPeriod) {
         int averageDailyConsumption = calculateAverageDailyConsumption(movementsByProductOutgoing, daysPeriod);
         return averageDailyConsumption * replenishmentTimeInDays;
@@ -106,6 +128,15 @@ public class StockDomain {
             totalQuantity += movement.getQuantity();
         }
         return daysPeriod > 0 ? totalQuantity / daysPeriod : 0;
+    }
+
+    private int calculateConsumption(List<MovementDomain> movementsByProductOutgoing, int daysPeriod) {
+        int totalQuantity = 0;
+
+        for (MovementDomain movement : movementsByProductOutgoing) {
+            totalQuantity += movement.getQuantity();
+        }
+        return daysPeriod > 0 ? totalQuantity : 0;
     }
 
 

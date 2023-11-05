@@ -17,4 +17,15 @@ public class ProductStockLevelDto {
     @Positive(message = "O tempo de reposição deve ser positivo.")
     @Schema(description = "Tempo em dias para repor o estoque do produto.", example = "15")
     private Integer replacementTime;
+
+
+    @Positive(message = "O custo do pedido deve ser positivo.")
+    @Schema(description = "O custo do pedido.", example = "100.0")
+    private Double orderCost;
+
+    @Positive(message = "O custo de armazenagem por produto.")
+    @Schema(description = "O custo de armazenagem por produto.", example = "50.0")
+    private Double storageCost;
+
+
 }

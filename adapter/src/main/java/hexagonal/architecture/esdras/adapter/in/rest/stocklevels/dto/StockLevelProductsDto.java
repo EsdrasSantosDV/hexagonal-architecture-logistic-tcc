@@ -29,8 +29,10 @@ public class StockLevelProductsDto {
     @Schema(description = "Porcentagem de margem de lucro.", example = "10.0")
     private Double margin;
 
+
     @NotNull(message = "Os níveis de estoque dos produtos não podem estar vazios.")
     @Schema(description = "Lista dos níveis de estoque dos produtos.")
     private List<@Valid ProductStockLevelDto> productsStock;
+
 
 }

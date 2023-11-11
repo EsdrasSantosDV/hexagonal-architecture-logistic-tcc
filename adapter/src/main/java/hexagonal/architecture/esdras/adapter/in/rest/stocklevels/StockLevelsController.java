@@ -8,7 +8,7 @@ import hexagonal.architecture.esdras.application.port.input.stocklevels.InputPor
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
-import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
@@ -37,7 +37,7 @@ public class StockLevelsController {
     }
 
 
-    @GET
+    @POST
     @Path("/get-stock-levels")
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(
@@ -63,7 +63,7 @@ public class StockLevelsController {
                     .entity(new ResultValidator(violations)).build();
         }
         try {
-            return Response.status(Response.Status.CREATED).entity(getStockLevelsUseCase.getStockLevels(StockLevelMapper.toGetStockCommand(request))).build();
+            return Response.status(Response.Status.CREATED).entity(getStockLevelsUseCase.getStockLevels(StockLevelMapper.toGetStockCommand(request)).stocksLevelsByProduct()).build();
         } catch (Exception e) {
             System.out.println(e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)

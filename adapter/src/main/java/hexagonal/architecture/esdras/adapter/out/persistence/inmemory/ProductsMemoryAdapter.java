@@ -36,4 +36,9 @@ public class ProductsMemoryAdapter implements OutputPortProduct {
     public List<ProductDomain> findByAllIds(List<String> ids) {
         return null;
     }
+
+    @Override
+    public List<ProductDomain> findAllFiltered() {
+        return this.products.values().stream().toList();
+    }
 }

@@ -44,5 +44,10 @@ public class JpaProductEntityAdapterRepository implements OutputPortProduct {
         return ProductEntityMapper.toModelEntities(panacheRepository.findByAllIds(ids));
     }
 
+    @Override
+    public List<ProductDomain> findAllFiltered() {
+        return ProductEntityMapper.toModelEntities(panacheRepository.findAll().stream().toList());
+    }
+
 
 }

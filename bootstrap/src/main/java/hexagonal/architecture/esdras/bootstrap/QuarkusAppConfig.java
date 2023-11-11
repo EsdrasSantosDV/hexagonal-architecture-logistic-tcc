@@ -4,16 +4,14 @@ package hexagonal.architecture.esdras.bootstrap;
 import hexagonal.architecture.esdras.application.port.input.invoiceentry.InputPortCreateInvoiceEntryUseCase;
 import hexagonal.architecture.esdras.application.port.input.invoiceout.InputPortCreateInvoiceOutUseCase;
 import hexagonal.architecture.esdras.application.port.input.products.InputPortCreateProductUseCase;
+import hexagonal.architecture.esdras.application.port.input.products.InputPortGetProductsUseCase;
 import hexagonal.architecture.esdras.application.port.input.stocklevels.InputPortGetStockLevels;
 import hexagonal.architecture.esdras.application.port.output.nfinvoiceentry.persistence.OutputPortNfInvoiceEntry;
 import hexagonal.architecture.esdras.application.port.output.nfinvoiceout.persistence.OutputPortNfInvoiceOut;
 import hexagonal.architecture.esdras.application.port.output.productcore.persistence.OutputPortProductCore;
 import hexagonal.architecture.esdras.application.port.output.products.persistence.OutputPortProduct;
 import hexagonal.architecture.esdras.application.port.output.stock.persistence.OutputPortStock;
-import hexagonal.architecture.esdras.application.service.products.CreateInvoiceOutService;
-import hexagonal.architecture.esdras.application.service.products.CreateInvoiceService;
-import hexagonal.architecture.esdras.application.service.products.CreateProductService;
-import hexagonal.architecture.esdras.application.service.products.StockLevelsMaximumMinService;
+import hexagonal.architecture.esdras.application.service.products.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.Produces;
@@ -42,6 +40,12 @@ class QuarkusAppConfig {
     @ApplicationScoped
     InputPortCreateProductUseCase inputPortCreateProductUseCase() {
         return new CreateProductService(outputPortProductRepository.get());
+    }
+
+    @Produces
+    @ApplicationScoped
+    InputPortGetProductsUseCase inputPortGetProductsUseCase() {
+        return new GetProductsService(outputPortProductRepository.get());
     }
 
     @Produces

@@ -13,4 +13,7 @@ public interface OutputPortProduct {
 
     List<ProductDomain> findByAllIds(List<String> ids);
 
+    List<ProductDomain> findAllFiltered();
+
+
 }

@@ -34,7 +34,12 @@ public class ProductsCollectionAdapterRepository implements OutputPortProduct {
 
     @Override
     public List<ProductDomain> findByAllIds(List<String> ids) {
-        return null;
+        return this.mongoRepository.findAll().stream().map(ProductsCollectionMapper::mongoToDomain).toList();
+    }
+
+    @Override
+    public List<ProductDomain> findAllFiltered() {
+        return this.mongoRepository.findAll().stream().map(ProductsCollectionMapper::mongoToDomain).toList();
     }
 
 

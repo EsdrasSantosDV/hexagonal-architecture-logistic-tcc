@@ -65,6 +65,7 @@ public class StockLevelsMaximumMinService implements InputPortGetStockLevels {
             results.add(result);
         }
 
+
         return new ResultStockProducts(results);
     }
 
